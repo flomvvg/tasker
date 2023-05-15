@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view('users.show', ['user' => $user]);
+        return view('dashboard.show');
     }
 
     /**
