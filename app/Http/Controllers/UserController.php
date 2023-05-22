@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use Couchbase\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -21,6 +23,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (Auth::check()) {
+            return to_route('dashboard')->withErrors(['loggedIn' => 'You are already logged in']);
+        }
         return view('users.create');
     }
 
@@ -31,7 +36,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        return to_route('users.show', ['user' => $user->id]);
+        return to_route('dashboard');
     }
 
     /**
@@ -39,8 +44,6 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id);
-
         return view('dashboard.show');
     }
 

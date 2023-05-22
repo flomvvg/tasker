@@ -11,8 +11,11 @@ use Illuminate\View\View;
 
 class LoginController extends Controller
 {
-    public function login(): View
+    public function login(): mixed
     {
+        if (Auth::check()) {
+            return to_route('dashboard')->withErrors(['loggedIn' => 'You are already logged in']);
+        }
         return view('auth.login');
     }
 
