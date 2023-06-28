@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TaskListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -26,3 +27,5 @@ Route::post('/login', [LoginController::class, 'authenticate']);
 Route::get('/dashboard', [DashboardController::class, 'show'])
     ->middleware('auth')->name('dashboard');
 Route::get('/logout', [LoginController::class, 'logout']);
+Route::resource('tasklist', TaskListController::class)
+    ->middleware('auth');
