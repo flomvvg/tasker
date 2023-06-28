@@ -4,7 +4,7 @@
         <a class="navbar-brand" href="#">Tasker</a>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="/tasklists" class="nav-link">Task lists</a>
+                <a href="/tasklist" class="nav-link">Task lists</a>
             </li>
         </ul>
         @if(Auth::guest())
