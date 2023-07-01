@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function taskLists(): HasMany
     {
-        return $this->hasMany(TaskList::class);
+        return $this->hasMany(Tasklist::class);
     }
 
     /**

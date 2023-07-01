@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTasklistRequest extends FormRequest
+class StoreTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,14 @@ class StoreTasklistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'description' => ['string'],
+            'title' => ['required'],
+            'description' => ['required'],
+            'dueDate' => [
+                'nullable',
+                'date'
+            ],
+            'note' => ['nullable'],
+            'done' => ['bool'],
         ];
     }
 }
