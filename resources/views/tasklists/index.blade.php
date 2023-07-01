@@ -2,7 +2,6 @@
 @include('nav')
 
 <div class="container">
-    <br>
     <h1 class="d-inline-block">Your Tasklists</h1>
     <a href="/tasklist/create"><button class="btn btn-success float-right">New List</button></a>
     <br>

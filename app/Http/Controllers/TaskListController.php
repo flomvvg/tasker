@@ -85,7 +85,7 @@ class TaskListController extends Controller
     public function destroy(Tasklist $tasklist)
     {
         $this->authorize('delete', $tasklist);
-        Tasklist::destroy($tasklist);
+        $tasklist->delete();
         return to_route('tasklist.index');
     }
 }

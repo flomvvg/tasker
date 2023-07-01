@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskListController;
@@ -34,3 +35,5 @@ Route::resource('tasklist.task', TaskController::class)
     ->middleware('auth');
 Route::patch('/{tasklist}/{task}/done', [TaskController::class, 'done'])
     ->middleware('auth')->name('tasklist.task.done');
+Route::resource('tasklist.task.item', ItemController::class)
+    ->middleware('auth');

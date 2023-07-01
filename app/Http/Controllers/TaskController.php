@@ -44,7 +44,8 @@ class TaskController extends Controller
     public function show(Tasklist $tasklist, Task $task)
     {
         $this->authorize('view', [$task, $tasklist]);
-        return view('tasks.show', ['task' => $task, 'tasklist' => $tasklist]);
+        $items = $task->items;
+        return view('tasks.show', ['task' => $task, 'tasklist' => $tasklist, 'items' => $items]);
     }
 
     /**

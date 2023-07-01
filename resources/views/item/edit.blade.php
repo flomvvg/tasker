@@ -1,5 +1,4 @@
 @include('base')
-<body>
 @include('nav')
 <div class="container">
     <br>
@@ -14,15 +13,12 @@
             </div>
         @endforeach
     @endif
-    <form action="/tasklist" class="" method="POST">
+    <form action="{{ route('tasklist.task.item.update', [$tasklist, $task, $item]) }}" class="" method="POST">
         @csrf
+        @method('PATCH')
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}"/>
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
+            <input type="text" name="name" id="name" class="form-control" value="{{ $item->name }}"/>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
