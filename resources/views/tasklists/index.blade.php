@@ -22,7 +22,7 @@
                 <button class="btn btn-primary float-right ml-1">Edit</button>
             </a>
             <a href="/tasklist/{{ $list->id }}">
-                <button class="btn btn-success float-right ">View</button>
+                <button class="btn btn-light float-right ">View</button>
             </a>
             <p class="">{{ $list->description }}</p>
 

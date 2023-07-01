@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTasklistRequest;
-use App\Models\TaskList;
+use App\Models\Task;
+use App\Models\Tasklist;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,39 +34,29 @@ class TaskListController extends Controller
      */
     public function store(StoreTasklistRequest $request)
     {
-        if ($request->validated()) {
-            $tasklist = new TaskList();
-            $tasklist->name = $request->name;
-            $tasklist->description = $request->description;
-            $tasklist->user_id = Auth::id();
-            $tasklist->save();
-        }
+        Tasklist::create($request->validated());
         return to_route('tasklist.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Tasklist $tasklist)
     {
-        $list = TaskList::find($id);
-        if (Auth::id() == $list->user_id){
-            return view('tasklists.show', ['list' => $list]);
-        }
-        return abort(403, 'You are not authorized to view this task list');
+        $this->authorize('view', $tasklist);
+        return view('tasklists.show', [
+            'list' => $tasklist,
+            'tasks' => $tasklist->task()->orderBy('done', 'asc')->get(),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tasklist $tasklist)
     {
-
-        $list = TaskList::find($id);
-        if (Auth::id() == $list->user_id){
-            return view('tasklists.edit', ['list' => $list]);
-        }
-        return abort(403, 'You are not authorized to edit this task list');
+        $this->authorize('edit', $tasklist);
+        return view('tasklists.edit', ['list' => $tasklist]);
     }
 
     /**
@@ -73,10 +64,10 @@ class TaskListController extends Controller
      */
     public function update(StoreTasklistRequest $request, string $id)
     {
-        $tasklist = TaskList::find($id);
+        $tasklist = Tasklist::find($id);
         if (Auth::id() == $tasklist->user_id){
             if ($request->validated()) {
-                $tasklist = TaskList::find($id);
+                $tasklist = Tasklist::find($id);
                 $tasklist->name = $request->name;
                 $tasklist->description = $request->description;
                 $tasklist->user_id = Auth::id();
@@ -91,13 +82,10 @@ class TaskListController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tasklist $tasklist)
     {
-        $tasklist = TaskList::find($id);
-        if (Auth::id() == $tasklist->user_id){
-            TaskList::destroy($id);
-            return to_route('tasklist.index');
-        }
-        return abort(403, 'You are not authorized to edit this task list');
+        $this->authorize('delete', $tasklist);
+        Tasklist::destroy($tasklist);
+        return to_route('tasklist.index');
     }
 }

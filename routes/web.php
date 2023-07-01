@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -29,3 +30,7 @@ Route::get('/dashboard', [DashboardController::class, 'show'])
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::resource('tasklist', TaskListController::class)
     ->middleware('auth');
+Route::resource('tasklist.task', TaskController::class)
+    ->middleware('auth');
+Route::patch('/{tasklist}/{task}/done', [TaskController::class, 'done'])
+    ->middleware('auth')->name('tasklist.task.done');
