@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Task;
+use App\Models\Tasklist;
+use App\Policies\TasklistPolicy;
+use App\Policies\TaskPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Tasklist::class => TasklistPolicy::class,
+        Task::class => TaskPolicy::class,
     ];
 
     /**
